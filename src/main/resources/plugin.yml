@@ -1,0 +1,4 @@
+name: Enchantment
+version: '1.0.0'
+main: toolkit.dev.enchantment.Enchantment
+api-version: '1.21'
