@@ -48,7 +48,7 @@ public class EnchantManager {
         meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, level);
 
         List<Component> lore = meta.lore() == null ? new ArrayList<>() : new ArrayList<>(Objects.requireNonNull(meta.lore()));
-        lore.add(Component.text(enchant.name() + " " + level, NamedTextColor.GRAY));
+        lore.add(Component.text(enchant.name() + " " + roman(level), NamedTextColor.GRAY));
 
         meta.lore(lore);
         item.setItemMeta(meta);
@@ -60,5 +60,21 @@ public class EnchantManager {
 
     public Map<String, CustomEnchant> all() {
         return Collections.unmodifiableMap(enchants);
+    }
+
+    private String roman(int number) {
+        return switch (number) {
+            case 1 -> "I";
+            case 2 -> "II";
+            case 3 -> "III";
+            case 4 -> "IV";
+            case 5 -> "V";
+            case 6 -> "VI";
+            case 7 -> "VII";
+            case 8 -> "IIX";
+            case 9 -> "IX";
+            case 10 -> "X";
+            default -> String.valueOf(number);
+        };
     }
 }
