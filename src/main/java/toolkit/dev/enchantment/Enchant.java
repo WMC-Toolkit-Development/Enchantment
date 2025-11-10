@@ -8,7 +8,7 @@ import toolkit.dev.enchantment.enchant.StunningBlowEnchant;
 import toolkit.dev.enchantment.listener.CombatListener;
 import toolkit.dev.enchantment.util.EnchantManager;
 
-public final class Enchantment extends JavaPlugin {
+public final class Enchant extends JavaPlugin {
 
     private final EnchantManager manager = new EnchantManager(this);
 

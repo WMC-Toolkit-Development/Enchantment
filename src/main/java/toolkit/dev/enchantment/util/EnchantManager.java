@@ -2,21 +2,22 @@ package toolkit.dev.enchantment.util;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
-import toolkit.dev.enchantment.Enchantment;
+import toolkit.dev.enchantment.Enchant;
 import toolkit.dev.enchantment.object.CustomEnchant;
 
 import java.util.*;
 
 public class EnchantManager {
-    private final Enchantment plugin;
+    private final Enchant plugin;
     private final Map<String, CustomEnchant> enchants = new HashMap<>();
 
-    public EnchantManager(@NotNull Enchantment plugin) {
+    public EnchantManager(@NotNull Enchant plugin) {
         this.plugin = plugin;
     }
 
@@ -60,6 +61,22 @@ public class EnchantManager {
 
     public Map<String, CustomEnchant> all() {
         return Collections.unmodifiableMap(enchants);
+    }
+
+    public ItemStack enchantBook(CustomEnchant enchant, int level) {
+        ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
+        ItemMeta meta = book.getItemMeta();
+        if (meta == null) return book;
+
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(enchant.name() + " " + roman(level), NamedTextColor.GRAY));
+        meta.lore(lore);
+
+        NamespacedKey key = new NamespacedKey(plugin, enchant.id());
+        meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, level);
+
+        book.setItemMeta(meta);
+        return book;
     }
 
     private String roman(int number) {
